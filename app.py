@@ -1,12 +1,25 @@
-from flask import Flask, redirect, render_template, Request, Response
+from flask import Flask
+import os
+from application.models import *
+from application import config
+from application.config import LocalConfig
 
-app = Flask(__name__)
+app = None
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    return render_template("base.html")
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(LocalConfig)
+    db.init_app(app)
+    app.app_context().push()
+    return app
+
+
+app = create_app()
+
+from application import controllers
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
+    db.create_all()
