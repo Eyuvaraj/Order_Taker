@@ -2,7 +2,7 @@ from .database import db
 from flask_login import UserMixin
 
 
-class users(UserMixin, db.Model):
+class Users(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String, nullable=False)
@@ -11,7 +11,8 @@ class users(UserMixin, db.Model):
     role = db.Column(db.String, nullable=False, default="user")
 
 
-class order(db.Model):
-    __tablename__ = "order"
+class Orders(db.Model):
+    __tablename__ = "orders"
     order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    order_naem = db.Column(db.String, nullable=False)
+    order_name = db.Column(db.String, nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
