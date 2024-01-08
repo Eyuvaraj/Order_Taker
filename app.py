@@ -1,5 +1,4 @@
 from flask import Flask
-import os
 from application.models import *
 from application import config
 from application.config import LocalConfig
@@ -17,9 +16,7 @@ def create_app():
 
 app = create_app()
 
-from application import controllers
-
+from application.index import *
 
 if __name__ == "__main__":
     app.run(debug=True)
-    db.create_all()

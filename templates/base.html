@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Taker</title>
+    <link rel="stylsheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    {% block head %} {% endblock %}
 </head>
 
 <body>
-    <h1>HIasdfa</h1>
+    {% block navbar %} {% endblock %}
+    {% block body %} {% endblock %}
+    {% block footer %} {% endblock %}
 </body>
 
 </html>
