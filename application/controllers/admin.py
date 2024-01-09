@@ -13,4 +13,5 @@ admin = Blueprint("admin", __name__)
 @login_required
 @admin.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
-    return render_template("admin/admin_dashboard.html")
+    user = Users.query.filter_by(id=current_user.id).first()
+    return render_template("admin/admin_dashboard.html", user=user)

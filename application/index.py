@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, jsonify, flash
 from flask import current_app as app
 from flask_login import (
     user_accessed,
@@ -7,7 +7,6 @@ from flask_login import (
     LoginManager,
     logout_user,
 )
-
 from .models import Users
 from .database import db
 
@@ -19,7 +18,7 @@ login_manager.session_protection = "strong"
 
 @login_manager.user_loader
 def loader_user(user_id):
-    return Users.query.get(user_id)
+    return Users.query.filter_by(id=user_id).first()
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -36,10 +35,10 @@ def login():
         if user is not None and user.password == password:
             if user.role == "admin":
                 login_user(user)
-                return redirect(url_for("admin.admin_dashboard", user=user.username))
+                return redirect(url_for("admin.admin_dashboard"))
             elif user.role == "user":
                 login_user(user)
-                return redirect(url_for("user.user_dashboard", user=user.username))
+                return redirect(url_for("user.user_dashboard"))
         elif user is None:
             flash("User does not exist.")
             return redirect(url_for("login"))
@@ -60,15 +59,10 @@ def signup():
             new_user = Users(email=email, password=password, username=username)
             db.session.add(new_user)
             db.session.commit()
-            print(new_user)
+            return redirect(url_for("login"))
         else:
             return redirect(url_for("signup"))
     return render_template("auth/signup.html")
-
-
-@app.route("/login", methods=["GET", "POST"])
-def authlogin():
-    return redirect(url_for("login"))
 
 
 @app.route("/logout")
