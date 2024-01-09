@@ -26,7 +26,8 @@
                 <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                            <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
+                                href="{{ url_for('user.user_dashboard', user=current_user.id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-house-door" viewBox="0 0 16 16">
                                     <path
@@ -51,7 +52,7 @@
                     <hr class="my-3">
                     <ul class="nav flex-column mb-auto">
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2" href="#">
+                            <a class="nav-link d-flex align-items-center gap-2" href="{{ url_for('logout') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -71,6 +72,59 @@
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h2 class="h2">Hi {{ user.username }}</h2>
+            </div>
+            <div class="card mb-3 border-light">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', filename='assets/chef1.png') }}" class="img-fluid rounded-start">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Discover Culinary Delights with Our Custom Catering Services</h5>
+                            <p class="card-text">Elevate your events with our personalized catering experience. Whether
+                                it's a corporate gathering,
+                                a birthday celebration, or a special occasion, we bring a touch of culinary excellence
+                                to your table.</p>
+                            <p class="card-text">Our skilled chefs curate a menu tailored to your preferences and
+                                dietary requirements. From
+                                appetizers to desserts, we ensure a gastronomic journey that delights your taste buds.
+                            </p>
+                            <div class="d-grid gap-2 col-10 mx-auto">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal">Order Now</button>
+                            </div>
+
+                            <div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static"
+                                data-bs-keyboard="false">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="modalLabel">Custom Order</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <div class="col">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="What\How\Where...">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" class="form-control" placeholder="answer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Place Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

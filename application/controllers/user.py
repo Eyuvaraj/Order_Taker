@@ -1,10 +1,7 @@
-from flask import Blueprint, flash, redirect, request, render_template, jsonify
+from flask import Blueprint, flash, redirect, request, render_template, jsonify, url_for
 from ..models import *
 from ..database import db
-from flask_login import (
-    login_required,
-    current_user,
-)
+from flask_login import login_required, current_user, login_manager
 
 
 user = Blueprint("user", __name__)

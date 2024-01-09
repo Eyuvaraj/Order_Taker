@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, jsonify, flash
+from flask import render_template, request, redirect, url_for, jsonify, flash, session
 from flask import current_app as app
 from flask_login import (
     user_accessed,
@@ -12,7 +12,7 @@ from .database import db
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "app.login"
+login_manager.login_view = "login"
 login_manager.session_protection = "strong"
 
 
@@ -68,5 +68,11 @@ def signup():
 @app.route("/logout")
 @login_required
 def logout():
+    session.clear()
     logout_user()
     return redirect(url_for("index"))
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for("login"))
