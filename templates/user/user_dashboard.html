@@ -14,6 +14,23 @@
 </header>
 
 <div class="container-fluid">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var customizationCounter = 1;
+
+            $("#addCustomization").on("click", function () {
+                var newFields = '<div class="col-6"><input type="text" name="key' + customizationCounter + '" class="form-control"></div>' +
+                    '<div class="col-6"><input type="text" name="value' + customizationCounter + '" class="form-control"></div>';
+
+                $("#customizationFields").append(newFields);
+
+                customizationCounter++;
+            });
+        });
+    </script>
+
     <div class="row">
         <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
             <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
@@ -27,7 +44,7 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                                href="{{ url_for('user.user_dashboard', user=current_user.id) }}">
+                                href="{{ url_for('user.user_dashboard') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-house-door" viewBox="0 0 16 16">
                                     <path
@@ -81,14 +98,11 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">Discover Culinary Delights with Our Custom Catering Services</h5>
-                            <p class="card-text">Elevate your events with our personalized catering experience. Whether
-                                it's a corporate gathering,
-                                a birthday celebration, or a special occasion, we bring a touch of culinary excellence
-                                to your table.</p>
-                            <p class="card-text">Our skilled chefs curate a menu tailored to your preferences and
-                                dietary requirements. From
-                                appetizers to desserts, we ensure a gastronomic journey that delights your taste buds.
-                            </p>
+                            <p class="card-text">Transform your events with our customized catering. Whether it's a
+                                corporate gathering, birthday, or special occasion,
+                                our chefs craft a menu to suit your preferences. From appetizers to desserts, we
+                                guarantee a delightful culinary
+                                experience.</p>
                             <div class="d-grid gap-2 col-10 mx-auto">
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                     data-bs-target="#modal">Order Now</button>
@@ -104,20 +118,29 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row g-3">
-                                                <div class="col">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="What\How\Where...">
+                                            <form method="post">
+                                                <div class="row g-3" id="customizationFields">
+                                                    {% for item in questions %}
+                                                    <div class="col-6">
+                                                        <label for="item" class="form-label">{{ item }}</label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="text" id="item" name="{{ item }}"
+                                                            class="form-control">
+                                                    </div>
+                                                    {% endfor %}
                                                 </div>
-                                                <div class="col">
-                                                    <input type="text" class="form-control" placeholder="answer">
+                                                <button type="button" class="btn btn-secondary btn-sm my-3"
+                                                    id="addCustomization">Add
+                                                    Customization</button>
+
+                                                <br>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Place Order</button>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Place Order</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
