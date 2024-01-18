@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block main %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/sign-up.css') }}">
+<div class="row">
+    <div class="col-6">
+        <img class="mb-4" height="400" src="{{ url_for('static', filename='assets/loading.gif') }}">
+    </div>
+    <div class="col-6">
+        <br><br><br><br>
+        <form method="POST">
+            <div class="form-floating">
+                <input type="email" class="form-control" name="email" id="email" placeholder="name@email.com" required>
+                <label for="email">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                    required>
+                <label for="password">Password</label>
+            </div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
+        </form>
+        <br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-warning alert-dismissible fade show alert-sm" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+{% endblock %}
