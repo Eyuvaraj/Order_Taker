@@ -11,18 +11,20 @@ class Users(UserMixin, db.Model):
     role = db.Column(db.String, nullable=False, default="user")
 
 
-class Orders(db.Model):
-    __tablename__ = "orders"
-    order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    order_name = db.Column(db.String, nullable=False)
+class Memory(db.Model):
+    __tablename__ = "memory"
+    memory_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     customer_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 
-class Order_details(db.Model):
-    __tablename__ = "order_details"
-    order_id = db.Column(db.Integer, db.ForeignKey("orders.order_id"), primary_key=True)
-    key = db.Column(db.String, primary_key=True)
-    value = db.Column(db.String)
+class User_Memory(db.Model):
+    __tablename__ = "user_memory"
+    memory_id = db.Column(
+        db.Integer, db.ForeignKey("memory.memory_id"), primary_key=True
+    )
+    note_heading = db.Column(db.String, primary_key=True)
+    note = db.Column(db.String)
+    date = db.Column(db.Date)
 
 
 class UserLogs(db.Model):

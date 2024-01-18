@@ -14,7 +14,7 @@ def create_app():
     db.init_app(app)
     app.app_context().push()
     app.secret_key = "4321-4342-7574-2412"
-    app.register_blueprint(admin, url_prefix="/admin")
+    # app.register_blueprint(admin, url_prefix="/admin")
     app.register_blueprint(user, url_prefix="/user")
     return app
 

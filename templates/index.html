@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>Order taker</title>
+<title>My Memory</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/cover.css') }}">
 {% endblock %}
 
@@ -13,7 +13,7 @@
     <header class="mb-auto">
       <div>
         <a href="{{ url_for('index') }}" style="text-decoration: none;">
-          <h3 class="float-md-start mb-0">Order-Taker</h3>
+          <h3 class="float-md-start mb-0">My Memory</h3>
         </a>
         <nav class="nav nav-masthead justify-content-center float-md-end">
           <a class="nav-link btn" href="{{ url_for('login') }}">login</a>
@@ -24,10 +24,9 @@
 
     <main class="px-3">
       {% block main %}
-      <img class="mb-4" src="{{ url_for('static', filename='assets/chef1.png') }}">
-      <h1>Order-Taker</h1>
-      <p class="lead">Welcome to Order-Taker, the ultimate solution for restaurants to efficiently manage and customize
-        orders from customers.</p>
+      <img class="mb-4" src="{{ url_for('static', filename='assets/family.png') }}">
+      <h1>My Memory</h1>
+      <p class="lead">A simple web application to save and lookback at your memories</p>
       {% endblock %}
     </main>
 
