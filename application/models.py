@@ -23,3 +23,11 @@ class Order_details(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey("orders.order_id"), primary_key=True)
     key = db.Column(db.String, primary_key=True)
     value = db.Column(db.String)
+
+
+class UserLogs(db.Model):
+    __tablename__ = "user_logs"
+    log_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    issue = db.Column(db.String)
+    datetime = db.Column(db.DateTime)

@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, jsonify, flash, session
 from flask import current_app as app
+import string
 from flask_login import (
     user_accessed,
     login_user,
@@ -7,8 +8,9 @@ from flask_login import (
     LoginManager,
     logout_user,
 )
-from .models import Users
+from .models import Users, UserLogs
 from .database import db
+from datetime import datetime
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -35,15 +37,45 @@ def login():
         if user is not None and user.password == password:
             if user.role == "admin":
                 login_user(user)
+                newlog = UserLogs(
+                    user_id=user.id, issue="login-success", datetime=datetime.now()
+                )
+                db.session.add(newlog)
+                db.session.commit()
                 return redirect(url_for("admin.admin_dashboard"))
             elif user.role == "user":
                 login_user(user)
+                newlog = UserLogs(
+                    user_id=user.id, issue="login-success", datetime=datetime.now()
+                )
+                db.session.add(newlog)
+                db.session.commit()
                 return redirect(url_for("user.user_dashboard"))
         elif user is None:
+            newlog = UserLogs(
+                user_id="Anonymous",
+                issue="Invalid user login attempt",
+                datetime=datetime.now(),
+            )
+            db.session.add(newlog)
+            db.session.commit()
             flash("User does not exist.")
             return redirect(url_for("login"))
         else:
-            flash("Incorrect password, Try again!! or ")
+            flash("Incorrect password, Try again!!")
+            newlog = UserLogs(
+                user_id=user.id,
+                issue="Invalid login credentials",
+                datetime=datetime.now(),
+            )
+            db.session.add(newlog)
+            db.session.commit()
+            incorrect_attempts = (
+                UserLogs.query.filter_by(user_id=user.id)
+                .filter_by(issue="Invalid login credentials")
+                .count()
+            )
+            print(incorrect_attempts)
             return redirect(url_for("login"))
     return render_template("auth/login.html")
 

@@ -8,9 +8,9 @@
     </div>
     <div class="col-6">
         <br><br><br><br>
-        <form method="POST">
+        <form method="POST" onsubmit="return validateForm()">
             <div class="form-floating">
-                <input type="name" class="form-control" name="name" id="name" placeholder="name" required>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
                 <label for="name">Name</label>
             </div>
             <div class="form-floating">
@@ -25,5 +25,29 @@
             <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
         </form>
     </div>
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            // Validate password
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,12}$/;
+            if (!passwordRegex.test(password)) {
+                alert('Password must contain at least one uppercase letter, one special character, and be 8-12 characters long.');
+                return false;
+            }
+
+            // If all validations pass, the form will be submitted
+            return true;
+        }
+    </script>
 </div>
 {% endblock %}
