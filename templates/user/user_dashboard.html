@@ -1,42 +1,25 @@
 {% extends "./base.html" %}
 
 {% block head %}
-<title>My Memory</title>
+<title>Memories</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
 {% endblock %}
 
 {% block body %}
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
-        <img src="{{ url_for('static', filename='assets/waiter.png') }}" height="48" width="48">
-        My Memory
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="{{ url_for('user.user_dashboard') }}">
+        <img src="{{ url_for('static', filename='assets/logo.png') }}" height="48" width="48">
+        Memories
     </a>
 </header>
 
 <div class="container-fluid">
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var customizationCounter = 1;
-
-            $("#addCustomization").on("click", function () {
-                var newFields = '<div class="col-6"><input type="text" name="key' + customizationCounter + '" class="form-control"></div>' +
-                    '<div class="col-6"><input type="text" name="value' + customizationCounter + '" class="form-control"></div>';
-
-                $("#customizationFields").append(newFields);
-
-                customizationCounter++;
-            });
-        });
-    </script>
-
     <div class="row">
         <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
             <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
                 aria-labelledby="sidebarMenuLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
+                    <h5 class="offcanvas-title" id="sidebarMenuLabel">Eyuvaraj</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"
                         aria-label="Close"></button>
                 </div>
@@ -54,15 +37,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2" href="#">
+                            <a class="nav-link d-flex align-items-center gap-2"
+                                href="{{ url_for('user.user_memories') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-bag-check" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                                    class="bi bi-valentine2" viewBox="0 0 16 16">
                                     <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
+                                        d="M8 6.493c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132M4.25 3a.25.25 0 0 0-.25.25v1.5a.25.25 0 0 0 .5 0V3.5h1.25a.25.25 0 0 0 0-.5zm6 0a.25.25 0 1 0 0 .5h1.25v1.25a.25.25 0 1 0 .5 0v-1.5a.25.25 0 0 0-.25-.25zM4.5 12.25a.25.25 0 1 0-.5 0v1.5c0 .138.112.25.25.25h1.5a.25.25 0 0 0 0-.5H4.5zm7.5 0a.25.25 0 1 0-.5 0v1.25h-1.25a.25.25 0 1 0 0 .5h1.5a.25.25 0 0 0 .25-.25z" />
+                                    <path fill-rule="evenodd"
+                                        d="M2 1.994v-.042a1 1 0 0 1 .9-.995l9-.9A1 1 0 0 1 13 1a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zM3 2v13h10V2z" />
                                 </svg>
-                                Orders
+                                Your Memories
                             </a>
                         </li>
                     </ul>
@@ -86,10 +70,14 @@
         </div>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div
-                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h2 class="h2">Hi {{ user.username }}</h2>
-            </div>
+            {% block main %}
+            <span>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 class="h2">Hi {{ user.username }}</h2>
+                    <h4 class="text-end">{{ date }}</h4>
+                </div>
+            </span>
             <div class="card mb-3 border-light">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -97,15 +85,14 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">Discover Culinary Delights with Our Custom Catering Services</h5>
-                            <p class="card-text">Transform your events with our customized catering. Whether it's a
-                                corporate gathering, birthday, or special occasion,
-                                our chefs craft a menu to suit your preferences. From appetizers to desserts, we
-                                guarantee a delightful culinary
-                                experience.</p>
+                            <h3 class="card-title">Memories</h3>
+                            <p class="card-text">Capture and cherish life's moments effortlessly with MyMemories. Your
+                                personal diary in the digital age, where you can
+                                seamlessly document, revisit, and relive your most cherished memories. Start creating
+                                your story today!</p>
                             <div class="d-grid gap-2 col-10 mx-auto">
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modal">Order Now</button>
+                                    data-bs-target="#modal">Memory Entry</button>
                             </div>
 
                             <div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static"
@@ -113,32 +100,41 @@
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="modalLabel">Custom Order</h1>
+                                            <h1 class="modal-title fs-5" id="modalLabel">Memory Entry</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form method="post">
-                                                <div class="row g-3" id="customizationFields">
-                                                    {% for item in questions %}
-                                                    <div class="col-6">
-                                                        <label for="item" class="form-label">{{ item }}</label>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <input type="text" id="item" name="{{ item }}"
+                                                <div class="row g-3">
+                                                    <div class="mb-3">
+                                                        <label for="memoryTitle" class="form-label">Title</label>
+                                                        <input name="memoryTitle" type="text" id="memoryTitle"
                                                             class="form-control">
                                                     </div>
-                                                    {% endfor %}
+                                                    <div class="mb-3">
+                                                        <label for="memory" class="form-label">A brief
+                                                            description of
+                                                            moments you don't want to forget.</label>
+                                                        <textarea name="memory" id="memory" class="form-control"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <select name="rating" class="form-select">
+                                                            <option selected disabled>Select Rating</option>
+                                                            <option value="Fantastic">Fantastic</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Ordinary">Ordinary</option>
+                                                            <option value="Forgettable">Forgettable</option>
+                                                            <option value="Tough Day">Tough Day</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <button type="button" class="btn btn-secondary btn-sm my-3"
-                                                    id="addCustomization">Add
-                                                    Customization</button>
-
-                                                <br>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Place Order</button>
+                                                    <button type="submit" class="btn btn-primary">Save
+                                                        Moments💖</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -149,6 +145,7 @@
                     </div>
                 </div>
             </div>
+            {% endblock %}
         </main>
     </div>
 </div>

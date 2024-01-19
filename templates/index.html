@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>My Memory</title>
+<title>Memories</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/cover.css') }}">
 {% endblock %}
 
@@ -13,7 +13,7 @@
     <header class="mb-auto">
       <div>
         <a href="{{ url_for('index') }}" style="text-decoration: none;">
-          <h3 class="float-md-start mb-0">My Memory</h3>
+          <h3 class="float-md-start mb-0">Memories</h3>
         </a>
         <nav class="nav nav-masthead justify-content-center float-md-end">
           <a class="nav-link btn" href="{{ url_for('login') }}">login</a>
@@ -25,7 +25,7 @@
     <main class="px-3">
       {% block main %}
       <img class="mb-4" src="{{ url_for('static', filename='assets/family.png') }}">
-      <h1>My Memory</h1>
+      <h1>Memories</h1>
       <p class="lead">A simple web application to save and lookback at your memories</p>
       {% endblock %}
     </main>

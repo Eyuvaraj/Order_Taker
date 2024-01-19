@@ -1,0 +1,31 @@
+{% extends 'user/user_dashboard.html' %}
+
+{% block main %}
+<br>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+    <div class="col">
+        {% for memory in memories %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="card-title">{{ memory.note_heading }}</h5>
+                    </div>
+
+                    <div class="col-6 text-end">
+                        <p class="card-title">
+                            <small class="text-body-secondary"> {{ memory.date.strftime("%dth %b, %Y") }}
+                                <span class="badge text-bg-warning">
+                                    {{ memory.ratings }}
+                                </span>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+                <p class="card-text">{{ memory.note }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
