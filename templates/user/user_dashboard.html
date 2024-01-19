@@ -13,6 +13,12 @@
     </a>
 </header>
 
+<style>
+    .custom-modal {
+        background-color: lightskyblue;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
@@ -49,6 +55,59 @@
                                 Your Memories
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn d-flex align-items-center gap-2" data-bs-toggle="modal"
+                                data-bs-target="#modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z" />
+                                    <path
+                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                </svg>
+                                Document Memory
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn d-flex align-items-center gap-2" data-bs-toggle="modal"
+                                data-bs-target="#searchModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                                Search
+                            </a>
+                        </li>
+
+                        <div class="modal fade" id="searchModal" tabindex="-1">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content custom-modal">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5">Search your memory</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <form method="post" action="{{ url_for('user.search') }}">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="memoryTitle" class="form-label">Search by title</label>
+                                                <input name="SearchTitle" type="text" id="memoryTitle"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="memoryTitle" class="form-label">Search by date</label>
+                                                <input name="DateSearch" type="date" id="memoryTitle"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     </ul>
                     <hr class="my-3">
                     <ul class="nav flex-column mb-auto">
@@ -69,82 +128,120 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content custom-modal">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalLabel">Document Memory</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{{ url_for('user.post_memory') }}">
+                            <div class="row g-3">
+                                <div class="mb-3">
+                                    <label for="memoryTitle" class="form-label">Title</label>
+                                    <input name="memoryTitle" type="text" id="memoryTitle" class="form-control"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="memory" class="form-label">A brief
+                                        description of
+                                        moments you don't want to forget.</label>
+                                    <textarea name="memory" id="memory" class="form-control" rows="3"
+                                        required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <select name="rating" class="form-select">
+                                        <option selected disabled>Select Rating</option>
+                                        <option value="Fantastic day">Fantastic</option>
+                                        <option value="Adventurous day">Adventurous</option>
+                                        <option value="Good day">Good</option>
+                                        <option value="Ordinary day">Ordinary</option>
+                                        <option value="Forgettable yet 😅">Forgettable yet 😅
+                                        </option>
+                                        <option value="Tough Day">Tough Day</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save
+                                    Moment💖</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             {% block main %}
             <span>
                 <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h2 class="h2">Hi {{ user.username }}</h2>
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-1 border-bottom">
+                    <h2 class="h2">what's up {{ user.username }}?</h2>
                     <h4 class="text-end">{{ date }}</h4>
                 </div>
             </span>
-            <div class="card mb-3 border-light">
+            <div class="card border-light">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{{ url_for('static', filename='assets/chef1.png') }}" class="img-fluid rounded-start">
+                        <img src="{{ url_for('static', filename='assets/girl_reading.png') }}"
+                            class="img-fluid rounded-start">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h3 class="card-title">Memories</h3>
-                            <p class="card-text">Capture and cherish life's moments effortlessly with MyMemories. Your
+                            <p class="card-text">Capture and cherish life's moments effortlessly with Memories. Your
                                 personal diary in the digital age, where you can
                                 seamlessly document, revisit, and relive your most cherished memories. Start creating
                                 your story today!</p>
                             <div class="d-grid gap-2 col-10 mx-auto">
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modal">Memory Entry</button>
-                            </div>
-
-                            <div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static"
-                                data-bs-keyboard="false">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="modalLabel">Memory Entry</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post">
-                                                <div class="row g-3">
-                                                    <div class="mb-3">
-                                                        <label for="memoryTitle" class="form-label">Title</label>
-                                                        <input name="memoryTitle" type="text" id="memoryTitle"
-                                                            class="form-control">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="memory" class="form-label">A brief
-                                                            description of
-                                                            moments you don't want to forget.</label>
-                                                        <textarea name="memory" id="memory" class="form-control"
-                                                            rows="3"></textarea>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select name="rating" class="form-select">
-                                                            <option selected disabled>Select Rating</option>
-                                                            <option value="Fantastic">Fantastic</option>
-                                                            <option value="Good">Good</option>
-                                                            <option value="Ordinary">Ordinary</option>
-                                                            <option value="Forgettable">Forgettable</option>
-                                                            <option value="Tough Day">Tough Day</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        Moments💖</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                    data-bs-target="#modal">Document Memory</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endblock %}
+
+            {% block random %}
+            {% if memories %}
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col">
+                    <h3>Random Memories</h3>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-1">
+                <div class="col-4"></div>
+                {% for memory in memories %}
+                <div class="col">
+                    <div class="card  h-100">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="card-title">{{ memory.note_heading }}</h5>
+                                </div>
+
+                                <div class="col-6 text-end">
+                                    <p class="card-title">
+                                        <small class="text-body-secondary"> {{ memory.date.strftime("%dth %b, %Y") }}
+                                            <span class="badge text-bg-warning">
+                                                {{ memory.ratings }}
+                                            </span>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="card-text">{{ memory.note }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             {% endblock %}
         </main>
     </div>

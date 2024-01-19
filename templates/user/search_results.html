@@ -1,10 +1,14 @@
 {% extends 'user/user_dashboard.html' %}
 
+
+
 {% block main %}
 <br>
 <div class="container">
     {% if memories %}
-    <h3 class="text-center">Your Memories</h3>
+    <h3 class="text-center">Search results for {% if query[0] != "" %}"{{ query[0] }}"{% endif %} {% if query[1] != ""
+        %} "{{ query[1] }}" {% endif %}
+        from your memory</h3>
     <hr>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
         {% for memory in memories %}
@@ -36,15 +40,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h3>No memories found</h3>
-                <br>
-                <br>
-                <img class="rounded" src="{{ url_for('static', filename='assets/zoozoo.gif') }}" class="img-fluid">
+                <h3>No results found for {% if query[0] != "" %}"{{ query[0] }}"{% endif %} {% if
+                    query[1] != "" %} "{{ query[1] }}" {% endif %}</h3>
+                <br><br><br>
+                <img class="rounded" src="{{ url_for('static', filename='assets/lol.gif') }}" class="img-fluid">
             </div>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
-
 
     <div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -89,8 +92,7 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
-{% block random %}
-{% endblock %}
+    {% block random %}
+    {% endblock %}
